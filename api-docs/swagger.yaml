@@ -1,0 +1,137 @@
+openapi: 3.0.0
+info:
+  title: Blog AGI API
+  description: API pour la génération de contenu et d'images de blog.
+  version: 1.0.0
+servers:
+  - url: http://localhost:5007
+    description: Serveur de développement local
+paths:
+  /title:
+    get:
+      summary: Génère un titre de blog.
+      description: Génère un titre de blog accrocheur et instructif de moins de 10 mots sur une thématique donnée.
+      parameters:
+        - name: topic
+          in: query
+          required: true
+          description: Thématique pour la génération du titre.
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Titre généré avec succès.
+          content:
+            text/plain:
+              schema:
+                type: string
+                example: "AGI : L'Astronomie Révolutionnée"
+        '400':
+          description: Paramètre 'topic' manquant.
+        '500':
+          description: Erreur interne du serveur lors de la génération.
+
+  /content:
+    get:
+      summary: Génère un article de blog.
+      description: Rédige un article de blog complet au format HTML sur une thématique.
+      parameters:
+        - name: topic
+          in: query
+          required: true
+          description: Thématique pour la rédaction de l'article.
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Article généré avec succès.
+          content:
+            text/html:
+              schema:
+                type: string
+                example: "<ul><li>...</li></ul>"
+        '400':
+          description: Paramètre 'topic' manquant.
+        '500':
+          description: Erreur interne du serveur lors de la génération.
+
+  /image:
+    get:
+      summary: Génère une image de blog.
+      description: Crée une image illustrant la thématique donnée.
+      parameters:
+        - name: topic
+          in: query
+          required: true
+          description: Thématique pour la génération de l'image.
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Image générée avec succès, renvoyée en base64.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  image:
+                    type: string
+                    example: "iVBORw0KGgoAAA..."
+        '400':
+          description: Paramètre 'topic' manquant.
+        '500':
+          description: Erreur interne du serveur lors de la génération.
+          
+  /save:
+    post:
+      summary: Enregistre un article de blog.
+      description: Sauvegarde le titre, le contenu HTML et l'image en WebP dans le dossier de sortie.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                title:
+                  type: string
+                  description: Le titre de l'article.
+                topic:
+                  type: string
+                  description: La thématique de l'article.
+                imageData:
+                  type: string
+                  description: Les données de l'image en base64.
+                content:
+                  type: string
+                  description: Le contenu HTML de l'article.
+      responses:
+        '200':
+          description: Contenu enregistré avec succès.
+        '500':
+          description: Erreur interne du serveur lors de l'enregistrement.
+          
+  /blog:
+    get:
+      summary: Récupère tous les articles de blog.
+      description: Renvoie la liste de tous les articles enregistrés (titre, image, contenu) sous forme de tableau JSON.
+      responses:
+        '200':
+          description: Articles récupérés avec succès.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    title:
+                      type: string
+                    image:
+                      type: string
+                    content:
+                      type: string
+                    topic:
+                      type: string
+        '500':
+          description: Erreur interne du serveur lors de la lecture des articles.
