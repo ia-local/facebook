@@ -1,0 +1,25 @@
+{
+  "slides": [
+    {
+      "id": 1,
+      "url": "video/background_01.mp4",
+      "type": "video/mp4",
+      "caption": "Aperçu du Flux IA : Analyse en Temps Réel",
+      "duration": 15
+    },
+    {
+      "id": 2,
+      "url": "video/background_02.mp4",
+      "type": "video/mp4",
+      "caption": "Optimisation des Données par Modèle Llama-3.1",
+      "duration": 18
+    },
+    {
+      "id": 3,
+      "url": "video/background_03.mp4",
+      "type": "video/mp4",
+      "caption": "Nouveau Dashboard : Interface Utilisateur Synthétique",
+      "duration": 12
+    }
+  ]
+}

@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AGI Facebook Content Factory</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="dashboard.css"> </head>
+    <link rel="stylesheet" href="socialChain.css"> </head>
+<body>
+    <header class="header">
+        <h1><i class="fab fa-facebook-f"></i> AGI Content Factory (Facebook)</h1>
+        <nav>
+            <a href="landing.html" class="nav-item"><i class="fas fa-home"></i> Accueil</a>
+            <a href="index.html" class="nav-item"><i class="fab fa-linkedin"></i> LinkedIn</a>
+            <a href="facebook.html" class="nav-item active"><i class="fab fa-facebook-f"></i> Facebook</a>
+            <a href="articles.html" class="nav-item"><i class="fas fa-archive"></i> Archives</a>
+        </nav>
+    </header>
+
+    <div class="main-grid-container">
+        
+        <aside class="aside left-panel" id="theme-inputs">
+            <h2><i class="fas fa-list-alt"></i> Thématiques & Inputs</h2>
+            <nav class="theme-list">
+                <a href="#" class="theme-link" data-topic="AGI_Partage_Familial"><i class="fas fa-heart"></i> Partage Familial</a>
+                <a href="#" class="theme-link" data-topic="AGI_Actualite_Locale"><i class="fas fa-map-marker-alt"></i> Actu Locale</a>
+                <a href="#" class="theme-link" data-topic="AGI_Debat_Communautaire"><i class="fas fa-comments"></i> Débat Viral</a>
+            </nav>
+            <div class="status-box">
+                <p>Statut: <span id="generation-status" class="status-idle">Prêt</span></p>
+            </div>
+        </aside>
+
+        <main class="main-content-panel" id="canvas-output">
+            <section class="content-section">
+                
+                <h2 id="article-title"><i class="fas fa-pen-nib"></i> Sélectionnez un sujet ou entrez un Prompt</h2>
+                <div class="image-and-content-area">
+                    <div class="media-preview" id="mediaPreview">
+                        <i class="fas fa-camera-retro fa-3x" style="color:#ccc;"></i>
+                        <p>Aperçu Média IA (Style Communautaire)</p>
+                    </div>
+                    
+                    <div class="article-output" id="resultatsTopic" contenteditable="true">
+                        <p>Le contenu du post généré (style Facebook) apparaîtra ici. Éditez directement si besoin.</p>
+                    </div>
+                </div>
+                <div class="final-action-controls">
+                    <div class="generation-controls">
+                    <div>
+                        <button id="btn-regenerate-title" disabled><i class="fas fa-redo"></i> Régénérer Accroche</button>
+                        <button id="btn-regenerate-media" disabled><i class="fas fa-redo"></i> Régénérer Média (<span id="current-media-type">Image</span>)</button>
+                        <button id="btn-regenerate-content" disabled><i class="fas fa-redo"></i> Régénérer Post</button>
+                    </div>
+                    <div>
+                        <button id="btn-save-content" disabled><i class="fas fa-save"></i> Enregistrer le Post</button>
+                        <button id="btn-post-linkedin" disabled class="facebook-post-btn"><i class="fab fa-facebook-f"></i> Publier sur Facebook</button>
+                    </div>
+                </div>
+                <div class="prompt-input-area">
+                    <textarea id="custom-prompt" placeholder="Saisissez un prompt ici pour générer le post, ou utilisez le menu à gauche..."></textarea>
+                    
+                    <div class="media-choice-controls">
+                        <button id="btn-generate-custom" class="primary-action"><i class="fas fa-cogs"></i> Générer à partir du Prompt</button>
+                        <button id="btn-set-image" class="media-type-btn active" data-media="image"><i class="fas fa-image"></i> Image</button>
+                        <button id="btn-set-video" class="media-type-btn" data-media="video"><i class="fas fa-video"></i> Vidéo</button>
+                        <span id="media-type-status" style="margin-left: 10px; font-weight: bold;">(Média: Image)</span>
+                    </div>
+                </div>
+
+            </section>
+        </main>
+
+        <aside class="aside right-panel" id="monitoring-console">
+            <h2><i class="fas fa-chart-line"></i> Monitoring</h2>
+            <div class="metric-box">
+                <p>Dernière génération: <span id="last-gen-time">N/A</span></p>
+                <p>Posts Jours: <span id="daily-count">0/1</span></p>
+            </div>
+            <h3><i class="fas fa-terminal"></i> Console Log</h3>
+            <pre id="console-log">Attente d'action...</pre>
+        </aside>
+
+    </div>
+
+    <footer>
+        <p>© 2024 - AGI Dashboard Modulaire Facebook</p>
+    </footer>
+
+    <script src="facebook.js"></script>
+</body>
+</html>

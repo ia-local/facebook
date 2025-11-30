@@ -1,0 +1,23 @@
+/* timecode.scss */
+
+// Définition de variables pour l'harmonie du thème IA/Technique
+$color-ia-primary: #00ff73; // Vert fluo
+$color-ia-bg: #0d1a26;      // Fond sombre
+
+.c-modal-content {
+    /* Style du contenu du modal */
+    font-family: 'Consolas', 'Courier New', monospace;
+    color: #e0e0e0;
+}
+
+#timecodeDisplay {
+    margin-top: 20px;
+    padding: 10px;
+    border: 1px solid $color-ia-primary;
+    background: rgba($color-ia-primary, 0.1);
+    color: $color-ia-primary;
+    font-size: 1.2rem;
+    text-align: center;
+    border-radius: 4px;
+    box-shadow: 0 0 5px $color-ia-primary;
+}

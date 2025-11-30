@@ -1,0 +1,106 @@
+/* style.css */
+
+/* 1. Base et Layout Principal */
+html, body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden; /* Empêche les barres de défilement dues au contenu fixe */
+    font-family: sans-serif;
+    color: white;
+}
+
+.l-canvas {
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+
+/* 2. Composant Vidéo (Calque 1) */
+.c-video-layer {
+    position: fixed; /* Fixe la vidéo à l'arrière-plan de la fenêtre */
+    top: 0;
+    left: 0;
+    width: 100vw; /* Vue complète de la largeur */
+    height: 100vh; /* Vue complète de la hauteur */
+    z-index: -1; /* Place le calque derrière tout le reste */
+    overflow: hidden;
+}
+
+#backgroundVideo {
+    width: 100%;
+    height: 100%;
+    /* La propriété clé : garantit que la vidéo couvre le conteneur */
+    object-fit: cover; 
+    transition: all 0.5s ease-in-out; /* Pour l'effet de transition lors du changement de format */
+}
+
+.c-video-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.4); /* Assombrissement pour la lisibilité */
+    z-index: 1;
+}
+/* modal.css ou style.css */
+
+.c-modal-system {
+    /* Propriétés de masquage par défaut */
+    visibility: hidden;
+    opacity: 0;
+    transition: opacity 0.3s ease, visibility 0s 0.3s; /* 0s de délai sur visibility pour masquage */
+    
+    /* Le reste de votre positionnement (position: fixed, z-index, etc.) */
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    z-index: 1000;
+}
+
+/* État actif (visible) */
+.c-modal-system.is-active,
+.c-modal-system[aria-hidden="false"] {
+    visibility: visible;
+    opacity: 1;
+    transition: opacity 0.3s ease; /* Pas de délai sur visibility pour affichage */
+}
+/* 3. Composant Contenu (Calque 2) */
+.c-content-layer {
+    position: relative; /* Au-dessus, mais relatif au canvas */
+    z-index: 10;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    height: 100vh;
+    padding: 20px;
+    box-sizing: border-box;
+    text-align: center;
+}
+
+/* Styles pour le contenu de démonstration (Hero) */
+.c-hero-content {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    max-width: 600px;
+    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.8);
+}
+
+.c-cta-btn {
+    padding: 10px 20px;
+    margin-top: 20px;
+    border: 2px solid white;
+    background: transparent;
+    color: white;
+    cursor: pointer;
+    font-size: 1.1em;
+}

@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Générateur d'Images Gemini Flash</title>
+    <!-- Chargement de Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Styles de base pour l'application */
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f3f4f6;
+            min-height: 100vh;
+        }
+        .container-app {
+            max-width: 900px;
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+    </style>
+</head>
+<body class="flex items-start justify-center p-4">
+    <div class="container-app w-full bg-white rounded-xl p-6 md:p-10 mt-10">
+        
+        <h1 class="text-3xl font-bold text-gray-900 text-center mb-6">
+            Génération d'Image avec Gemini Flash
+        </h1>
+        <p class="text-gray-600 text-center mb-8">
+            Entrez une description (prompt) pour générer une image à l'aide du modèle <code class="font-mono bg-gray-100 p-1 rounded">gemini-2.5-flash-image-preview</code>.
+        </p>
+
+        <!-- Formulaire de Prompt -->
+        <div class="flex flex-col space-y-4">
+            <textarea id="promptInput" rows="3" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500 transition shadow-sm" placeholder="Ex: Un chat noir aux yeux jaunes sur un skateboard, style peinture à l'huile."></textarea>
+            <button id="generateButton" class="w-full bg-blue-600 text-white font-semibold py-3 rounded-lg hover:bg-blue-700 transition duration-200 shadow-md disabled:bg-gray-400">
+                Générer l'Image
+            </button>
+        </div>
+
+        <!-- Zone de Résultat et Chargement -->
+        <div id="resultArea" class="mt-8">
+            <div id="loadingIndicator" class="hidden text-center p-8 border border-blue-200 bg-blue-50 rounded-lg text-blue-700">
+                <svg class="animate-spin h-5 w-5 mr-3 inline text-blue-500" viewBox="0 0 24 24">
+                    <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                    <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                </svg>
+                Génération en cours... Veuillez patienter.
+            </div>
+
+            <div id="imageDisplay" class="hidden mt-4">
+                <h2 class="text-xl font-semibold text-gray-800 mb-3 border-b pb-2">Image Générée</h2>
+                <img id="generatedImage" class="w-full h-auto rounded-lg shadow-xl border border-gray-100" alt="Image générée par IA" />
+                <div id="generatedText" class="mt-4 p-4 bg-gray-50 rounded-lg text-gray-700"></div>
+            </div>
+
+            <div id="errorDisplay" class="hidden text-center p-4 mt-4 border border-red-300 bg-red-100 rounded-lg text-red-800">
+                Une erreur est survenue lors de la génération.
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const promptInput = document.getElementById('promptInput');
+        const generateButton = document.getElementById('generateButton');
+        const loadingIndicator = document.getElementById('loadingIndicator');
+        const imageDisplay = document.getElementById('imageDisplay');
+        const generatedImage = document.getElementById('generatedImage');
+        const generatedText = document.getElementById('generatedText');
+        const errorDisplay = document.getElementById('errorDisplay');
+
+        const API_KEY = ""; // Laissez la clé vide. Canvas la fournira au runtime.
+        const API_URL_BASE = 'https://generativelanguage.googleapis.com/v1beta/models/';
+        const MODEL_NAME = 'gemini-2.5-flash-image-preview';
+        const API_URL = `${API_URL_BASE}${MODEL_NAME}:generateContent?key=${API_KEY}`;
+        
+        // --- Utilité pour l'Exponantial Backoff (Gestion des erreurs de l'API) ---
+        /**
+         * Effectue une requête fetch avec une stratégie de backoff exponentiel pour la gestion des erreurs.
+         * @param {string} url - L'URL de l'API.
+         * @param {object} options - Les options de la requête fetch.
+         * @param {number} maxRetries - Le nombre maximum de tentatives.
+         * @returns {Promise<Response>} La réponse de la requête fetch réussie.
+         */
+        async function fetchWithBackoff(url, options, maxRetries = 5) {
+            for (let attempt = 0; attempt < maxRetries; attempt++) {
+                try {
+                    const response = await fetch(url, options);
+                    
+                    if (response.ok) {
+                        return response;
+                    }
+                    
+                    // Si le code est 429 (Trop de requêtes) ou si l'API retourne une erreur que l'on veut réessayer
+                    if ((response.status === 429 || response.status >= 500) && attempt < maxRetries - 1) {
+                        // Délai exponentiel + jitter (aléatoire)
+                        const delay = Math.pow(2, attempt) * 1000 + Math.random() * 1000;
+                        console.warn(`Tentative ${attempt + 1} échouée (Status ${response.status}). Réessai dans ${delay.toFixed(0)}ms...`);
+                        await new Promise(resolve => setTimeout(resolve, delay));
+                        continue;
+                    }
+
+                    // Pour les autres erreurs, on lance l'exception
+                    const errorBody = await response.json();
+                    throw new Error(`Erreur API: ${response.status} - ${errorBody.error?.message || response.statusText}`);
+
+                } catch (error) {
+                    if (attempt === maxRetries - 1) {
+                        throw error; // Échoue après la dernière tentative
+                    }
+                    const delay = Math.pow(2, attempt) * 1000 + Math.random() * 1000;
+                    console.error(`Erreur réseau/génération. Réessai dans ${delay.toFixed(0)}ms...`, error.message);
+                    await new Promise(resolve => setTimeout(resolve, delay));
+                }
+            }
+        }
+
+        // --- Logique Principale de Génération ---
+        async function generateImage() {
+            const userPrompt = promptInput.value.trim();
+
+            if (!userPrompt) {
+                errorDisplay.textContent = "Veuillez entrer une description pour générer l'image.";
+                errorDisplay.classList.remove('hidden');
+                return;
+            }
+
+            // Réinitialiser l'état
+            errorDisplay.classList.add('hidden');
+            imageDisplay.classList.add('hidden');
+            generatedImage.src = '';
+            generatedText.textContent = '';
+            generateButton.disabled = true;
+            loadingIndicator.classList.remove('hidden');
+
+            const payload = {
+                contents: [{
+                    parts: [{ text: userPrompt }]
+                }],
+                generationConfig: {
+                    // Indique que nous voulons du texte ET de l'image en retour
+                    responseModalities: ['TEXT', 'IMAGE'] 
+                },
+            };
+
+            const options = {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(payload)
+            };
+
+            try {
+                const response = await fetchWithBackoff(API_URL, options);
+                const result = await response.json();
+                
+                const candidate = result?.candidates?.[0];
+
+                if (!candidate) {
+                    throw new Error("Réponse de l'API vide ou non structurée.");
+                }
+
+                let base64Data = null;
+                let textResult = null;
+                
+                // Recherche de la partie image (inlineData) et texte dans la réponse
+                for (const part of candidate.content.parts) {
+                    if (part.inlineData && part.inlineData.mimeType.startsWith('image/')) {
+                        base64Data = part.inlineData.data;
+                    }
+                    if (part.text) {
+                        textResult = part.text;
+                    }
+                }
+
+                if (base64Data) {
+                    // Crée l'URL de données pour afficher l'image PNG
+                    const imageUrl = `data:image/png;base64,${base64Data}`;
+                    generatedImage.src = imageUrl;
+                    imageDisplay.classList.remove('hidden');
+                    generatedImage.alt = userPrompt;
+                } else {
+                    // Si aucune image n'est retournée, s'assurer que l'image reste cachée
+                    generatedImage.src = '';
+                    generatedText.textContent = "Aucune image n'a été générée, mais voici la réponse textuelle :";
+                }
+
+                if (textResult) {
+                    // Afficher le texte généré (peut être la description de l'image ou une information)
+                    generatedText.innerHTML = `<strong>Réponse du modèle :</strong> ${textResult.replace(/\n/g, '<br>')}`;
+                } else if (!base64Data) {
+                     // Si ni image ni texte n'est disponible
+                    generatedText.innerHTML = `<strong>Réponse du modèle :</strong> Le modèle n'a retourné ni image ni texte.`;
+                }
+
+            } catch (error) {
+                console.error("Erreur de génération :", error);
+                // Afficher l'erreur dans l'interface utilisateur
+                errorDisplay.textContent = `Erreur: ${error.message}`;
+                errorDisplay.classList.remove('hidden');
+
+            } finally {
+                // Arrêter l'indicateur de chargement et réactiver le bouton
+                loadingIndicator.classList.add('hidden');
+                generateButton.disabled = false;
+            }
+        }
+
+        // --- Écouteur d'Événement ---
+        generateButton.addEventListener('click', generateImage);
+        promptInput.addEventListener('keypress', (e) => {
+            // Permettre la génération par la touche Enter (sauf si Shift ou Alt est maintenu)
+            if (e.key === 'Enter' && !e.shiftKey && !e.altKey && !generateButton.disabled) {
+                e.preventDefault();
+                generateImage();
+            }
+        });
+        
+    </script>
+</body>
+</html>

@@ -1,0 +1,78 @@
+/* --- Couches Générales --- */
+.c-video-layer, .c-content-layer {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    /* Assure que le contenu est par-dessus la vidéo */
+    z-index: 10; 
+}
+
+/* Couche Vidéo */
+#backgroundVideo {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Recouvre tout le conteneur sans déformation */
+    transition: opacity 0.5s ease-in-out; /* Pour l'effet de transition */
+}
+
+.c-video-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    /* Gradient sombre pour améliorer la lisibilité du texte */
+    background: rgba(0, 0, 0, 0.4); 
+    pointer-events: none; /* Permet aux clics de passer à la couche de contenu */
+    transition: background 0.5s;
+}
+
+/* --- Contrôles du Slider (Pagination) --- */
+.c-slider-controls {
+    position: absolute;
+    top: 50%;
+    left: 0;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    padding: 0 20px;
+    transform: translateY(-50%);
+    z-index: 20; /* Au-dessus de toutes les couches */
+    pointer-events: none; /* Par défaut, les contrôles ne bloquent pas le clic sur le contenu */
+}
+
+.c-slider-btn {
+    pointer-events: auto; /* Réactive les clics pour les boutons eux-mêmes */
+    background: rgba(255, 255, 255, 0.1);
+    color: white;
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    font-size: 1.5rem;
+    cursor: pointer;
+    transition: background 0.3s, transform 0.1s;
+}
+
+.c-slider-btn:hover {
+    background: rgba(255, 255, 255, 0.3);
+    border-color: white;
+}
+
+/* --- Légende de la Vidéo --- */
+.c-slider-caption-container {
+    margin-top: 20px;
+    padding: 10px 0;
+    text-align: center;
+}
+
+.c-slider-caption {
+    font-size: 1.2rem;
+    color: white;
+    background: rgba(0, 0, 0, 0.5);
+    padding: 5px 15px;
+    display: inline-block;
+    border-radius: 5px;
+}

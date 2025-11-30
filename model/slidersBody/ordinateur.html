@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interface Multi-Calque Vidéo</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="slide.css">
+    <link rel="stylesheet" href="modal.css"> 
+    <link rel="stylesheet" href="modalOrdinateur.css"> 
+</head>
+<body>
+
+<div class="l-canvas">
+
+    <div class="c-video-layer" id="videoLayer">
+        <video id="backgroundVideo" autoplay loop muted playsinline></video>
+        <div class="c-video-overlay"></div> 
+    </div>
+
+    <div class="c-content-layer">
+        
+        <header class="c-navbar">
+            </header>
+
+        <main class="l-grid l-grid--ia-flux">
+            <section class="c-ia-feed-container">
+                <h2>🤖 Interface de Flux / IA</h2>
+                
+                <div class="c-slider-caption-container">
+                    <p id="slideCaption" class="c-slider-caption"></p>
+                </div>
+
+                <button id="showModalBtn" class="c-cta-btn">Ouvrir Modal Système</button>
+                    <button id="showPCModalBtn" class="c-pc-trigger c-cta-btn" aria-label="Ouvrir Interface Ordinateur">
+                      💻 Console IA
+                    </button>
+            </section>
+        </main>
+
+        <div class="c-slider-controls">
+            <button id="prevSlideBtn" class="c-slider-btn c-slider-btn--left" aria-label="Vidéo précédente">←</button>
+            <button id="nextSlideBtn" class="c-slider-btn c-slider-btn--right" aria-label="Vidéo suivante">→</button>
+        </div>
+
+    </div> <div id="modalSystem" class="c-modal-system" aria-hidden="true">
+        <div class="c-modal-dialog">
+            <header class="c-modal-header">
+                <h3>📊 Tableau de Bord Système</h3>
+                <button class="c-modal-close-btn" aria-label="Fermer le modal">×</button>
+            </header>
+            
+            <div class="c-modal-content">
+                
+                <h4>Indicateurs de Performance Clés (KPIs)</h4>
+                <div class="l-grid l-grid--dashboard">
+                    <div class="c-kpi-card">KPI 1: 99.9% Uptime</div>
+                    <div class="c-kpi-card">KPI 2: 120ms Latency</div>
+                    <div class="c-kpi-card">KPI 3: 45 Tâches en cours</div>
+                </div>
+                
+                <hr>
+                
+                <h4>Flux de Données Temps Réel</h4>
+                <div class="c-data-stream">
+                    <p>Statut du système : <span class="c-status--ok">Opérationnel</span></p>
+                    <p>Timecode Vidéo Actuel (via calc.js) : <span id="timecodeDisplay">00:00.00</span></p>
+                    <p>Mémoire allouée : 85%</p>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+
+
+<div id="pcModal" class="c-pc-modal" aria-hidden="true">
+    <div class="c-pc-dialog">
+        <header class="c-pc-header">
+            <h3>Console de Contrôle (PC)</h3>
+            <button class="c-pc-close-btn" aria-label="Fermer la console">×</button>
+        </header>
+        <div class="c-pc-content">
+            <p>Contenu simulé d'une interface d'ordinateur ou de terminal...</p>
+        </div>
+    </div>
+</div>
+    <script src="calc.js" type="module"></script>
+    <script src="modalSystem.js" type="module"></script>
+    <script src="sliderVideo.js" type="module"></script>
+    <script src="modalOrdinateur.js" type="module"></script> 
+    <script src="script.js" type="module"></script>
+    
+</div> </body>
+</html>

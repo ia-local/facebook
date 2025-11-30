@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interface Multi-Calque Vidéo</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div class="l-canvas">
+
+        <div class="c-video-layer" id="videoLayer">
+            <video id="backgroundVideo" autoplay loop muted playsinline></video>
+            <div class="c-video-overlay"></div>
+        </div>
+
+        <div class="c-content-layer">
+            <header class="c-navbar">
+                <h1>Mon Site</h1>
+                <div class="c-format-selector">
+                    <button data-format="16:9">16:9</button>
+                    <button data-format="9:16">9:16</button>
+                    <button data-format="1:1">1:1</button>
+                </div>
+            </header>
+
+            <main class="c-hero-content">
+                <h2>Votre Contenu Héro Éclatant</h2>
+                <p>La vidéo de fond s'adapte parfaitement à l'écran, peu importe son format.</p>
+                <button class="c-cta-btn">Agir Maintenant</button>
+            </main>
+            
+        </div>
+
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

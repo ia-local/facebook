@@ -1,0 +1,102 @@
+/* ========================================= */
+/* MODAL GLOBAL (Intégré & Semi-Transparent) */
+/* ========================================= */
+
+.c-modal-system {
+    /* 1. Positionnement dans le composant parent (doit être positionné: relative/absolute) */
+    position: absolute; 
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+
+    /* 2. Quasi-Transparence du fond */
+    /* Très faible opacité pour laisser entrevoir la vidéo en dessous */
+    background: rgba(0, 0, 0, 0.45); 
+    
+    z-index: 1000;
+    visibility: hidden;
+    opacity: 0;
+    transition: opacity 0.3s ease, visibility 0s 0.3s; 
+    
+    /* Centrage du contenu (bien que le dialogue remplisse 100%) */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* État actif */
+.c-modal-system[aria-hidden="false"],
+.c-modal-system.is-active {
+    visibility: visible;
+    opacity: 1;
+    transition: opacity 0.3s ease;
+}
+
+/* ========================================= */
+/* DIALOGUE MODAL (Plein Écran Interne) */
+/* ========================================= */
+
+.c-modal-dialog {
+    /* Remplissage complet du conteneur modal */
+    width: 100%; 
+    height: 100%;
+    max-width: none; 
+    
+    /* 3. Fond du dialogue légèrement transparent */
+    background: rgba(255, 255, 255, 0.1); /* Utilise un fond blanc très transparent */
+    box-shadow: none; 
+    margin: 0;
+    border-radius: 0;
+    transform: none; 
+
+    /* Structure Flex pour Header et Contenu */
+    display: flex;
+    flex-direction: column;
+}
+
+/* ========================================= */
+/* HEADER et BOUTON DE FERMETURE (Optimisation Espace Paysage) */
+/* ========================================= */
+
+.c-modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 15px; /* Réduit le padding pour gagner de la hauteur */
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1); /* Ligne de séparation douce */
+    flex-shrink: 0; 
+}
+
+.c-modal-header h3 {
+    font-size: 1.1rem; /* Taille de police ajustée */
+    color: white; /* Texte blanc si le fond est sombre/transparent */
+}
+
+.c-modal-close-btn {
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    color: white; 
+    cursor: pointer;
+}
+
+/* ========================================= */
+/* CONTENU DU DASHBOARD DANS LE MODAL */
+/* ========================================= */
+
+.c-modal-content {
+    flex-grow: 1; 
+    overflow-y: auto; 
+    padding: 10px; /* Padding réduit */
+    color: #e9ecef; /* Texte clair pour le contenu */
+}
+
+/* Les styles l-grid--dashboard et c-kpi-card devront être adaptés
+   pour s'assurer qu'ils tiennent dans la faible hauteur du mode paysage mobile. */
+.c-modal-content .l-grid--dashboard {
+    /* Maintien de la grille mais peut nécessiter des ajustements */
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); /* Minmax réduit */
+    gap: 10px;
+}

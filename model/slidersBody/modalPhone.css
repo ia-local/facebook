@@ -1,0 +1,123 @@
+/* modalPhone.css */
+
+/* ========================================= */
+/* 1. ZONE GLOBALE (Overlay d'interaction) */
+/* ========================================= */
+
+.c-phone-pair-zone {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none; /* Permet aux clics de passer au contenu principal par défaut */
+}
+
+/* ========================================= */
+/* 2. BOUTONS DE DÉCLENCHEMENT (Triggers) */
+/* ========================================= */
+
+.c-phone-trigger {
+    position: absolute;
+    pointer-events: auto; /* Permet le clic */
+    z-index: 60;
+    
+    /* Styles visuels de base */
+    background: rgba(255, 255, 255, 0.2);
+    border: 1px solid white;
+    color: white;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 1.2rem;
+    transition: background 0.2s, transform 0.2s;
+}
+
+.c-phone-trigger:hover {
+    background: rgba(255, 255, 255, 0.4);
+    transform: scale(1.1);
+}
+
+/* Positionnement des boutons d'activation */
+.c-phone-trigger--left {
+    left: 31%;     
+    top: 80%;      
+    transform: rotate(-5deg); 
+}
+
+.c-phone-trigger--right {
+    left: 63%;     
+    top: 75%;      
+    transform: rotate(5deg);
+}
+
+
+/* ========================================= */
+/* 3. CADRES DES MODALES (Superposition sur l'écran) */
+/* ========================================= */
+
+.c-phone-modal {
+    position: absolute;
+    /* Dimensions du cadre (ajustées pour le format Portrait 9:16) */
+    width: 20%;      
+    height: 70%;     
+    
+    /* Gestion de l'état (caché par défaut) */
+    opacity: 0; 
+    visibility: hidden;
+    transition: opacity 0.4s;
+    z-index: 50; 
+    pointer-events: none; /* Les clics passent à travers quand c'est caché */
+}
+
+.c-phone-modal[aria-hidden="false"] {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto; /* Permet le clic quand c'est visible */
+}
+
+/* --- Positionnement Spécifique (Doit correspondre aux téléphones dans l'image) --- */
+.c-phone-modal[data-position="left"] {
+    left: 21%;     
+    top: 15%;      
+    transform: rotate(-5deg); 
+}
+
+.c-phone-modal[data-position="right"] {
+    left: 48%;     
+    top: 10%;      
+    transform: rotate(5deg); 
+}
+
+/* ========================================= */
+/* 4. DIALOGUE INTERNE (Contenu de l'écran) */
+/* ========================================= */
+
+.c-phone-modal .c-modal-dialog {
+    width: 100%;
+    height: 100%;
+    padding: 0;
+    margin: 0;
+    background: rgba(30, 30, 30, 0.85); /* Fond sombre et semi-transparent (UI moderne) */
+    color: #f0f0f0;
+    border-radius: 10px; 
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.5); 
+    
+    display: flex;
+    flex-direction: column;
+}
+
+.c-phone-modal .c-modal-header {
+    background: rgba(255, 255, 255, 0.1);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+    padding: 8px 10px;
+    flex-shrink: 0;
+}
+
+.c-phone-modal .c-modal-content {
+    flex-grow: 1;
+    overflow-y: auto;
+    padding: 10px;
+    font-size: 0.9rem; /* Taille de police réduite pour l'écran de téléphone */
+}

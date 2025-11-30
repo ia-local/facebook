@@ -1,0 +1,179 @@
+/* modalDrone_camera.css (Ajusté pour la superposition) */
+
+/* ========================================= */
+/* 1. MODAL (Overlay) - Positionnement sur l'Écran PC */
+/* ========================================= */
+/* modalDrone_camera.css (Ajusté pour la superposition et la Transparence) */
+
+/* ========================================= */
+/* 1. MODAL (Overlay) - Positionnement sur l'Écran PC */
+/* ========================================= */
+
+.c-drone-modal {
+    position: absolute; 
+    left: 35%; 
+    top: 10%;
+    width: 48%; 
+    height: 62%; 
+
+    visibility: hidden;
+    opacity: 0;
+    transition: opacity 0.4s ease;
+    z-index: 300; 
+    
+    transform: rotateY(-2deg) rotateX(1deg);
+    transform-origin: bottom left; 
+
+    /* AJOUT : Transparence et Flou sur la zone EN DEHORS du flux */
+    background: transparent; 
+    backdrop-filter: blur(2px); /* Léger flou sur le contenu arrière-plan */
+}
+
+.c-drone-modal[aria-hidden="false"] {
+    visibility: visible;
+    opacity: 1;
+}
+
+/* ========================================= */
+/* 2. DIALOGUE (Flux Caméra) */
+/* ========================================= */
+
+.c-drone-dialog {
+    width: 100%;
+    height: 100%;
+    
+    /* MODIFICATION CLÉ : Utiliser RGBA pour la transparence */
+    background:rgba(0, 0, 0, 0.45); /* Noir 90% opaque (10% de transparence) */
+    
+    border: none;
+    box-shadow: none;
+    border-radius: 0; 
+    position: relative;
+    overflow: hidden;
+}
+
+/* ========================================= */
+/* 3. FLUX VIDÉO ET CONTRÔLES */
+/* ========================================= */
+
+.c-drone-feed-container {
+    width: 100%;
+    height: 100%;
+    position: relative;
+}
+
+#droneVideoFeed {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    /* Optionnel : Si vous voulez que la vidéo elle-même soit semi-transparente, ajoutez: */
+    /* opacity: 0.9; */
+}
+
+/* Bouton de fermeture */
+.c-drone-close-btn {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    background: rgba(255, 255, 255, 0.1); /* Conserve une faible opacité sur le bouton */
+    border: 1px solid white;
+    color: white;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    font-size: 0.8rem;
+    line-height: 1;
+    text-align: center;
+    cursor: pointer;
+    z-index: 10;
+}
+
+.c-drone-close-btn:hover {
+    background: red;
+}
+
+.c-drone-modal {
+    /* Changement clé : Absolute pour positionner dans l-canvas */
+    position: absolute; 
+    
+    /* Coordonnées affinées pour coller à l'écran du PC */
+    left: 35%; 
+    top: 10%;
+    width: 48%; /* Largeur de l'écran PC */
+    height: 62%; /* Hauteur de l'écran PC */
+
+    /* Masquer/Afficher */
+    visibility: hidden;
+    opacity: 0;
+    transition: opacity 0.4s ease;
+    
+    /* Le z-index doit être très haut pour couvrir le contenu */
+    z-index: 300; 
+    
+    /* La perspective de l'écran est subtile. Nous allons la simuler avec une légère rotation */
+    transform: rotateY(-2deg) rotateX(1deg);
+    transform-origin: bottom left; /* La rotation doit se faire depuis la base de l'écran */
+
+    /* Réinitialiser le fond pour que seul le flux soit visible */
+    background: transparent; 
+}
+
+.c-drone-modal[aria-hidden="false"] {
+    visibility: visible;
+    opacity: 1;
+}
+
+/* ========================================= */
+/* 2. DIALOGUE (Flux Caméra) */
+/* ========================================= */
+
+.c-drone-dialog {
+    width: 100%;
+    height: 100%;
+    background: black; /* L'écran est noir avant que le flux ne se charge */
+    border: none;
+    box-shadow: none;
+    border-radius: 0; /* Pas de bords arrondis pour un écran PC */
+    position: relative;
+    overflow: hidden;
+}
+
+/* ========================================= */
+/* 3. FLUX VIDÉO ET CONTRÔLES */
+/* ========================================= */
+
+.c-drone-feed-container {
+    width: 100%;
+    height: 100%;
+    position: relative;
+}
+
+#droneVideoFeed {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* Bouton de fermeture positionné en haut à droite de l'écran */
+.c-drone-close-btn {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    background: rgba(255, 255, 255, 0.2);
+    border: 1px solid white;
+    color: white;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    font-size: 0.8rem;
+    line-height: 1;
+    text-align: center;
+    cursor: pointer;
+    z-index: 10;
+}
+
+.c-drone-close-btn:hover {
+    background: red;
+}
+
+/* Le reste des contrôles (.c-drone-controls) est conservé */

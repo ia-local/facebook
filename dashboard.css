@@ -1,0 +1,144 @@
+/* facebook.css - Charte Graphique pour le Dashboard Facebook */
+
+/* Variables de thème FACEBOOK */
+:root {
+    --facebook-blue: #1877f2; /* Le bleu de Facebook */
+    --agi-dark: #032850;
+    --background-light: #f0f2f5; /* Gris clair de l'interface Facebook */
+    --panel-bg: #ffffff;
+    --border-color: #ddd;
+    --primary-color: var(--facebook-blue);
+}
+
+body {
+    font-family: 'Helvetica Neue', Arial, sans-serif; /* Police plus typique de Facebook */
+    margin: 0;
+    padding: 0;
+    background-color: var(--background-light);
+    color: #333;
+}
+
+/* HEADER */
+.header {
+    background-color: var(--primary-color); 
+    color: white;
+    padding: 15px 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.header h1 i {
+    color: white;
+}
+
+.header nav .nav-item {
+    color: white;
+    text-decoration: none;
+    padding: 10px 15px;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+    margin-left: 10px;
+}
+
+.header nav .nav-item:hover, .header nav .active {
+    background-color: #1660b8; /* Bleu foncé au survol */
+}
+
+/* MAIN GRID (structure inchangée) */
+.main-grid-container {
+    display: grid;
+    grid-template-columns: 250px 1fr 300px; 
+    gap: 20px;
+    padding: 20px;
+    min-height: calc(100vh - 120px);
+    max-width: 1600px;
+    margin: 0 auto;
+}
+
+.aside, .main-content-panel {
+    background-color: var(--panel-bg);
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+/* ASIDE GAUCHE */
+.left-panel h2 {
+    color: var(--primary-color);
+    border-bottom: 2px solid var(--border-color);
+    padding-bottom: 10px;
+    margin-top: 0;
+}
+
+/* ... (Styles du menu/liens/status box inchangés, utilisant les couleurs par défaut) ... */
+
+
+/* CONTENU PRINCIPAL */
+.content-section h2 {
+    color: var(--agi-dark);
+    margin-top: 0;
+    margin-bottom: 20px;
+}
+
+/* BOUTONS (Action) */
+button {
+    background-color: var(--primary-color);
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+button:hover:not(:disabled) {
+    background-color: #1660b8; /* Bleu foncé au survol */
+}
+
+.primary-action {
+    background-color: var(--agi-dark);
+}
+
+.primary-action:hover {
+    background-color: var(--primary-color);
+}
+
+.linkedin-post-btn {
+    /* Maintenir la couleur LinkedIn pour cette action spécifique même sur le dashboard Facebook */
+    background-color: #0A66C2; 
+}
+
+/* ASIDE DROIT */
+.right-panel h2 {
+    color: var(--agi-dark);
+}
+
+.metric-box {
+    padding: 10px;
+    border: 1px solid var(--primary-color);
+    border-radius: 4px;
+    margin-bottom: 20px;
+    background-color: #e7f3ff; /* Fond très clair */
+}
+
+#console-log {
+    background-color: #222;
+    color: #fff;
+    /* ... (Autres styles inchangés) ... */
+}
+
+/* FOOTER */
+.footer {
+    text-align: center;
+    padding: 10px 0;
+    background-color: #ddd;
+    color: #555;
+    font-size: 0.9em;
+}
+
+/* Media Query (inchangé) */
+@media (max-width: 1200px) {
+    /* ... */
+}

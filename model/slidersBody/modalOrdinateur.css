@@ -1,0 +1,87 @@
+/* modalOrdinateur.css */
+
+/* ========================================= */
+/* 1. MODAL (Overlay) */
+/* ========================================= */
+
+.c-pc-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.95); /* Très sombre pour l'effet console */
+    z-index: 2000;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    visibility: hidden;
+    opacity: 0;
+    transition: opacity 0.4s ease;
+}
+
+.c-pc-modal.is-active,
+.c-pc-modal[aria-hidden="false"] {
+    visibility: visible;
+    opacity: 1;
+}
+
+/* ========================================= */
+/* 2. DIALOGUE (L'écran de l'ordinateur) */
+/* ========================================= */
+
+.c-pc-dialog {
+    width: 90%;
+    max-width: 1400px; /* Grande taille pour le PC */
+    height: 85vh;
+    
+    background: #1e1e1e; /* Fond foncé classique des IDE/Consoles */
+    border: 3px solid #00c4ff; /* Bordure d'accentuation (style néon/tech) */
+    border-radius: 10px;
+    box-shadow: 0 0 50px rgba(0, 196, 255, 0.3); /* Lueur */
+
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+/* ========================================= */
+/* 3. EN-TÊTE ET CONTENU */
+/* ========================================= */
+
+.c-pc-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    background: #0d0d0d;
+    color: #00c4ff; /* Texte d'en-tête technique */
+    border-bottom: 1px solid #00c4ff;
+    flex-shrink: 0;
+}
+
+.c-pc-close-btn {
+    background: none;
+    border: none;
+    color: #fff;
+    font-size: 1.5rem;
+    cursor: pointer;
+    opacity: 0.7;
+    transition: opacity 0.2s;
+}
+
+.c-pc-close-btn:hover {
+    opacity: 1;
+}
+
+.c-pc-content {
+    flex-grow: 1;
+    overflow-y: auto;
+    padding: 20px;
+    color: #00ff00; /* Texte de la console (vert classique) */
+    font-family: 'Courier New', monospace; /* Police de console */
+    font-size: 0.9rem;
+    line-height: 1.5;
+}

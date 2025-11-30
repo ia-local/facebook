@@ -144,8 +144,8 @@ button:disabled {
 }
 
 .image-and-content-area {
-    display: grid;
-    grid-template-columns: 30% 1fr; /* Image à gauche, Article à droite */
+    display: flex;
+    flex-direction: column;
     gap: 20px;
 }
 

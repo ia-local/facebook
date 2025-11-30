@@ -1,5 +1,5 @@
 document.addEventListener('DOMContentLoaded', () => {
-    const API_BASE = ''; 
+    const API_BASE = 'http://localhost:5011';
     
     // --- Éléments du DOM ---
     const titleElement = document.getElementById('article-title');

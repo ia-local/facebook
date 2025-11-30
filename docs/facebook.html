@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AGI LinkedIn Dashboard (Modulaire)</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="dashboard.css">
+</head>
+<body>
+    <header class="header">
+        <h1><i class="fab fa-linkedin"></i> AGI Content Factory</h1>
+        <nav>
+            <a href="index.html" class="nav-item active"><i class="fas fa-hammer"></i> Production</a>
+            <a href="articles.html" class="nav-item"><i class="fas fa-archive"></i> Archives</a>
+        </nav>
+    </header>
+
+    <div class="main-grid-container">
+        
+        <aside class="aside left-panel" id="theme-inputs">
+            <h2><i class="fas fa-list-alt"></i> Thématiques & Inputs</h2>
+            <nav class="theme-list">
+                <a href="#" class="theme-link" data-topic="AGI_1_Facebook_icon-réseau_social_professionnel"><i class="fas fa-network-wired"></i> Réseau Pro</a>
+                <a href="#" class="theme-link" data-topic="AGI_1_Facebook_icon-kit_model"><i class="fas fa-box-open"></i> Kit Modèle</a>
+                <a href="#" class="theme-link" data-topic="AGI_1_Facebook_icon-article_model"><i class="fas fa-drafting-compass"></i> Article Modèle</a>
+                <a href="#" class="theme-link" data-topic="AGI_1_Facebook_icon-article_CV numérique"><i class="fas fa-file-invoice"></i> CV Numérique</a>
+                <a href="#" class="theme-link" data-topic="AGI_1_Facebook_icon-article_lettre_de_motivation"><i class="fas fa-envelope-open-text"></i> Lettre Motivation</a>
+            </nav>
+            <div class="status-box">
+                <p>Statut: <span id="generation-status" class="status-idle">Prêt</span></p>
+            </div>
+        </aside>
+
+        <main class="main-content-panel" id="canvas-output">
+            <section class="content-section">
+                
+                <h2 id="article-title"><i class="fas fa-pen-nib"></i> Sélectionnez un sujet ou entrez un Prompt</h2>
+                <div class="image-and-content-area">
+                    <div class="media-preview" id="mediaPreview">
+                        <i class="fas fa-camera-retro fa-3x" style="color:#ccc;"></i>
+                        <p>Aperçu Média IA</p>
+                    </div>
+                    
+                    <div class="article-output" id="resultatsTopic" contenteditable="true">
+                        <p>Le contenu de l'article généré apparaîtra ici. Éditez directement si besoin.</p>
+                    </div>
+                </div>
+                <div class="final-action-controls">
+                    <div class="generation-controls">
+                    <div>
+                        <button id="btn-regenerate-title" disabled><i class="fas fa-redo"></i> Régénérer Titre</button>
+                        <button id="btn-regenerate-media" disabled><i class="fas fa-redo"></i> Régénérer Média (<span id="current-media-type">Image</span>)</button>
+                        <button id="btn-regenerate-content" disabled><i class="fas fa-redo"></i> Régénérer Article</button>
+                    </div>
+                    <div>
+                        <button id="btn-save-content" disabled><i class="fas fa-save"></i> Enregistrer l'Article</button>
+                        <button id="btn-post-linkedin" disabled class="linkedin-post-btn"><i class="fab fa-linkedin"></i> Simuler Post (Daily)</button>
+                    </div>
+                </div>
+                <div class="prompt-input-area">
+                    <textarea id="custom-prompt" placeholder="Saisissez un prompt ici pour générer l'article, ou utilisez le menu à gauche..."></textarea>
+                    
+                    <div class="media-choice-controls">
+                        <button id="btn-generate-custom" class="primary-action"><i class="fas fa-cogs"></i> Générer à partir du Prompt</button>
+                        <button id="btn-set-image" class="media-type-btn active" data-media="image"><i class="fas fa-image"></i> Image</button>
+                        <button id="btn-set-video" class="media-type-btn" data-media="video"><i class="fas fa-video"></i> Vidéo</button>
+                        <span id="media-type-status" style="margin-left: 10px; font-weight: bold;">(Média: Image)</span>
+                    </div>
+                </div>
+
+            </section>
+        </main>
+
+        <aside class="aside right-panel" id="monitoring-console">
+            <h2><i class="fas fa-chart-line"></i> Monitoring</h2>
+            <div class="metric-box">
+                <p>Dernière génération: <span id="last-gen-time">N/A</span></p>
+                <p>Articles Jours: <span id="daily-count">0/1</span></p>
+            </div>
+            <h3><i class="fas fa-terminal"></i> Console Log</h3>
+            <pre id="console-log">Attente d'action...</pre>
+        </aside>
+
+    </div>
+
+    <footer class="footer">
+        <p>© 2024 - AGI Dashboard Modulaire | Version <span id="app-version">1.0</span></p>
+    </footer>
+
+    <script src="dashboard.js"></script>
+</body>
+</html>
